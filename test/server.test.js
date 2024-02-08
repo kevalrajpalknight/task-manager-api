@@ -67,6 +67,17 @@ tap.test("PUT /tasks/:id", async (t) => {
   t.end();
 });
 
+tap.test("PUT /tasks/:id with missing completed field default to be false", async (t) => {
+  const updatedTask = {
+    title: "Updated Task",
+    description: "Updated Task Description",
+  };
+  const response = await server.put("/tasks/1").send(updatedTask);
+  t.equal(response.status, 200);
+  t.equal(response.body.completed, false);
+  t.end();
+});
+
 tap.test("PUT /tasks/:id with invalid id", async (t) => {
   const updatedTask = {
     title: "Updated Task",
